@@ -1,6 +1,23 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :restaurants do 
+    resources :reviews, only: [:new, :create]
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+    # Additional routes that relate to the restaurant
+    collection do 
+      # "Custom index"
+      # /restaurants/whatever_word_you_say
+      get :top
+    end
+
+    member do 
+      # "Custom show"
+      # /restaurants/:id/whatever_word_you_say
+      get :chef
+    end
+  end
+
+  resources :reviews, only: :destroy
+
+  # get "/restaurants/top", to: "restaurants#top"
+  # get "/restaurants/:id/chef", to: "restaurants#chef"
 end
